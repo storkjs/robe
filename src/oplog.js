@@ -174,7 +174,7 @@ class Oplog extends EventEmitter {
    *
    * @return {Promise}
    */
-  start () {
+  start (oplogCollection) {
     var self = this;
 
     // already started?
@@ -188,7 +188,7 @@ class Oplog extends EventEmitter {
       .then(function() {
         debug('Start watching oplog');
 
-        var oplog = self.db.collection('oplog.rs');
+        var oplog = self.db.collection(oplogCollection || 'oplog.rs');
 
         // get highest current timestamp
         return Q.promisify(oplog.find, oplog)({}, {
